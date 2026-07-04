@@ -97,20 +97,9 @@ prompt { enabled: false; }
     background-color:  @surface-alt;
     border:            1px solid;
     border-color:      @accent;
-    text-color:        @fg;
+    text-color:        @accent2;
 }
-#element.selected #element-text { text-color: @accent2; }
-
 #element.alternate.active { background-color: @surface; }
-
-element-text selected { text-color: @accent2; }
-
-// matched substring highlight
-entry placeholder { }
-
-#mode-switcher {
-    enabled: false;
-}
 
 // error / urgent rows
 #element.urgent {

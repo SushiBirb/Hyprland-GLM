@@ -20,7 +20,7 @@
 #window {
     width:        420px;
     height:       540px;
-    anchor:       center center;
+    anchor:       center;
     location:     center;
     border-radius:16px;
     border:       2px solid;
@@ -73,7 +73,8 @@ prompt {
 }
 #element.selected {
     background-color: @surface;
-    border: 1px solid @accent;
+    border: 1px solid;
+    border-color: @accent;
     text-color: @accent2;
 }
 element-icon { size: 1.4em; background-color: transparent; }
