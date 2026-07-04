@@ -1,0 +1,134 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 38,
+    "spacing": 6,
+    "margin-top": 8,
+    "exclusive": true,
+    "gtk-layer-shell": true,
+    "passthrough": false,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "cpu",
+        "memory",
+        "pulseaudio",
+        "network",
+        "battery",
+        "tray",
+        "custom/hogwarts"
+    ],
+
+    "hyprland/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": false,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "Ⅰ",
+            "2": "Ⅱ",
+            "3": "Ⅲ",
+            "4": "Ⅳ",
+            "5": "Ⅴ",
+            "6": "Ⅵ",
+            "7": "Ⅶ",
+            "8": "Ⅷ",
+            "9": "Ⅸ",
+            "10": "Ⅹ",
+            "default": "•",
+            "urgent": "!",
+            "empty": "∘"
+        },
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": []
+        },
+        "on-click": "activate"
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 48,
+        "rewrite": {
+            "(.*) — Mozilla Firefox": "$1",
+            "(.*) - Zen Browser": "$1",
+            "(.*) - Dolphin": "$1",
+            "(.*) — kitty": "$1"
+        }
+    },
+
+    "clock": {
+        "format": "<span font='Cinzel 18'></span>  {:%H:%M}",
+        "format-alt": "<span font='Cinzel 14'>{:%A · %e %B}</span>\n<span font='EB Garamond 10'>{:%Y}</span>",
+        "tooltip-format": "<tt><big>{calendar}</big></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "format": {
+                "months": "<span color='#ecc24c'><b>{}</b></span>",
+                "days": "<b>{}</b>",
+                "weeks": "<span color='#aaa'><i>W{}</i></span>",
+                "weekdays": "<span color='#e87d3a'><b>{}</b></span>",
+                "today": "<span color='#c0392b'><b>{}</b></span>"
+            }
+        }
+    },
+
+    "cpu": {
+        "format": "<span font='Material Symbols Sharp 12'></span> {usage}%",
+        "tooltip": true,
+        "interval": 3
+    },
+
+    "memory": {
+        "format": "<span font='Material Symbols Sharp 12'></span> {}%",
+        "interval": 5
+    },
+
+    "pulseaudio": {
+        "format": "<span font='Material Symbols Sharp 12'>{icon}</span> {volume}%",
+        "format-muted": "<span font='Material Symbols Sharp 12'></span> muted",
+        "format-icons": {
+            "headphone": "",
+            "default": ["", "", ""]
+        },
+        "scroll-step": 3,
+        "on-click": "pavucontrol",
+        "tooltip-format": "{desc}"
+    },
+
+    "network": {
+        "format-wifi": "<span font='Material Symbols Sharp 12'></span> {essid}",
+        "format-ethernet": "<span font='Material Symbols Sharp 12'></span> {ipaddr}",
+        "format-disconnected": "<span font='Material Symbols Sharp 12'></span> offline",
+        "tooltip-format": "{ifname} · {ipaddr}",
+        "max-length": 22
+    },
+
+    "battery": {
+        "states": { "warning": 30, "critical": 15 },
+        "format": "<span font='Material Symbols Sharp 12'>{icon}</span> {capacity}%",
+        "format-charging": "<span font='Material Symbols Sharp 12'></span> {capacity}%",
+        "format-icons": ["", "", "", "", "", "", "", "", "", "", ""],
+        "format-full": "<span font='Material Symbols Sharp 12'></span> full"
+    },
+
+    "tray": {
+        "spacing": 8,
+        "icon-size": 16
+    },
+
+    "custom/hogwarts": {
+        "exec": "~/.config/hogwarts/scripts/bar-theme.sh",
+        "interval": 10,
+        "format": "<span font='Cinzel 12'>{}</span>",
+        "on-click": "~/.config/rofi/scripts/settings.sh",
+        "tooltip": true
+    }
+}

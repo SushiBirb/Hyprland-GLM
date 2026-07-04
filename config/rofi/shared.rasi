@@ -1,0 +1,20 @@
+// ============================================================================
+//  shared.rasi — global rofi settings (static, theme-agnostic)
+//  Imported by every generated rofi theme.  Valid rasi subset only.
+// ============================================================================
+
+configuration {
+    modi:           "drun,run,window";
+    font:           "EB Garamond 13";
+    show-icons:     true;
+    icon-theme:     "Papirus-Dark";
+    drun-display-format: "{name}";
+    scroll-method:  0;
+    click-to-exit:  true;
+    matching:       "fuzzy";
+    steal-focus:    false;
+}
+
+window {
+    transparency: "real";
+}

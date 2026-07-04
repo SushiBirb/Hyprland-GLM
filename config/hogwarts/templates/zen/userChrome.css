@@ -1,0 +1,98 @@
+/* ===========================================================================
+ *  userChrome.css — Zen Browser Hogwarts theme (GENERATED — see palettes.conf)
+ *  Recolours Zen's chrome (toolbars, tabs, url bar, sidebar) to match the
+ *  active house palette.  Enabled via toolkit.legacyUserProfileCustomizations
+ *  .stylesheets (handled by zen-theme.sh).
+ * =========================================================================*/
+
+@namespace xul url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+:root {
+    --hog-bg:        {{BG}};
+    --hog-surface:   {{SURFACE}};
+    --hog-text:      {{TEXT}};
+    --hog-text-dim:  {{TEXT_DIM}};
+    --hog-accent:    {{ACCENT}};
+    --hog-accent2:   {{ACCENT2}};
+    --hog-border:    {{BORDER}};
+}
+
+/* --- Global background ---------------------------------------------------- */
+#navigator-toolbox,
+#nav-bar,
+#PersonalToolbar,
+#tabbrowser-tabs,
+.tabbrowser-tab,
+.tabs-newtab-button,
+#zen-sidebar,
+#zen-sidebar-top {
+    background-color: var(--hog-bg) !important;
+    color: var(--hog-text) !important;
+}
+
+/* --- URL bar -------------------------------------------------------------- */
+#urlbar,
+#searchbar {
+    background-color: var(--hog-surface) !important;
+    color: var(--hog-text) !important;
+    border: 1px solid var(--hog-border) !important;
+    border-radius: 8px !important;
+}
+#urlbar[focused],
+#urlbar[focused] #urlbar-input {
+    border-color: var(--hog-accent) !important;
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.04) !important;
+}
+#urlbar #urlbar-input,
+#urlbar .urlbarView-row {
+    color: var(--hog-text) !important;
+}
+.urlbarView-row[selected] .urlbarView-row-inner,
+.urlbarView-row[selected] {
+    background-color: var(--hog-accent) !important;
+    color: var(--hog-bg) !important;
+}
+
+/* --- Tabs ----------------------------------------------------------------- */
+.tabbrowser-tab .tab-content {
+    color: var(--hog-text-dim) !important;
+    border-radius: 8px !important;
+}
+.tabbrowser-tab[selected] .tab-content,
+.tabbrowser-tab[selected]:hover .tab-content {
+    background-color: var(--hog-accent) !important;
+    color: var(--hog-bg) !important;
+}
+.tabbrowser-tab:hover .tab-content {
+    background-color: var(--hog-surface) !important;
+}
+.tab-line[selected],
+.tab-background[selected] {
+    box-shadow: none !important;
+}
+
+/* --- Zen vertical sidebar / workspaces ----------------------------------- */
+#zen-sidebar,
+#zen-tabs-wrapper {
+    background-color: var(--hog-bg) !important;
+    border-right: 1px solid var(--hog-border) !important;
+}
+.zen-workspace-button[selected],
+.tabbrowser-tab[pinned][selected] .tab-background {
+    background-color: var(--hog-accent) !important;
+}
+
+/* --- Buttons / arrows ----------------------------------------------------- */
+toolbarbutton,
+.findbar-button,
+#nav-bar toolbarbutton {
+    fill: var(--hog-text) !important;
+    color: var(--hog-text) !important;
+}
+toolbarbutton:hover {
+    background-color: var(--hog-surface) !important;
+    border-radius: 8px !important;
+}
+
+/* --- Scrollbars ----------------------------------------------------------- */
+* { scrollbar-color: var(--hog-accent) var(--hog-surface) !important; }

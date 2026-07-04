@@ -1,0 +1,119 @@
+// ============================================================================
+//  theme.rasi — Hogwarts app launcher (GENERATED — see palettes.conf)
+// ----------------------------------------------------------------------------
+//  Decorated, parchment-and-glass launcher.  Cinzel for the headings, EB
+//  Garamond for list items, Material Symbols for the prompt icon.
+// ============================================================================
+
+@import "shared.rasi"
+
+* {
+    font: "EB Garamond 13";
+    accent:           {{ACCENT}};
+    accent2:          {{ACCENT2}};
+    bg:               {{BG@0.86}};
+    surface:          {{SURFACE@0.92}};
+    surface-alt:      {{SURFACE_ALT@0.96}};
+    fg:               {{TEXT}};
+    fg-dim:           {{TEXT_DIM}};
+    border:           {{BORDER}};
+    urgent:           {{URGENT}};
+}
+
+#window {
+    width:        620px;
+    height:       520px;
+    anchor:       north;
+    location:     north;
+    y-offset:     56px;
+    border-radius:18px;
+    border:       2px solid;
+    border-color: @border;
+    background-color: @bg;
+    padding:      0px;
+}
+
+#mainbox {
+    spacing: 0px;
+    children: [ "inputbar", "message", "listview" ];
+}
+
+// --- Header / prompt ---------------------------------------------------------
+#inputbar {
+    enabled: true;
+    padding: 22px 26px 16px 26px;
+    spacing: 14px;
+    children: [ "entry" ];
+    background-color: transparent;
+    border: 0px 0px 1px 0px;
+    border-color: @border;
+}
+
+prompt { enabled: false; }
+
+#entry {
+    placeholder:      "Summon an application…";
+    placeholder-color:@fg-dim;
+    text-color:       @fg;
+    font:             "Cinzel 22";
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+// --- listview ----------------------------------------------------------------
+#listview {
+    cycles:       true;
+    dynamic:      true;
+    scrollbar:    false;
+    layout:       vertical;
+    padding:      8px 14px 16px 14px;
+    columns:      1;
+    lines:        7;
+    spacing:      2px;
+    background-color: transparent;
+}
+
+#message {
+    enabled: false;
+}
+
+#element {
+    orientation:      horizontal;
+    vertical-align:   0.5;
+    spacing:          14px;
+    padding:          10px 16px;
+    border-radius:    12px;
+    background-color: transparent;
+    text-color:       @fg;
+}
+#element-icon {
+    size: 1.6em;
+}
+#element-text {
+    vertical-align: 0.5;
+}
+
+#element.selected {
+    background-color:  @surface-alt;
+    border:            1px solid;
+    border-color:      @accent;
+    text-color:        @fg;
+}
+#element.selected #element-text { text-color: @accent2; }
+
+#element.alternate.active { background-color: @surface; }
+
+element-text selected { text-color: @accent2; }
+
+// matched substring highlight
+entry placeholder { }
+
+#mode-switcher {
+    enabled: false;
+}
+
+// error / urgent rows
+#element.urgent {
+    background-color: @urgent;
+    text-color:       #ffffff;
+}

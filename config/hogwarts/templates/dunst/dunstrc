@@ -1,0 +1,74 @@
+# ============================================================================
+#  dunstrc — Hogwarts notifications (GENERATED — see palettes.conf)
+# ============================================================================
+[global]
+    monitor = 0
+    follow = mouse
+    width = 360
+    height = 180
+    origin = bottom-right
+    offset = 18x52
+    scale = 0
+    notification_limit = 6
+    progress_bar = true
+    progress_bar_height = 6
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 150
+    progress_bar_max_width = 320
+    indicate_hidden = yes
+    transparency = 12
+    separator_height = 6
+    padding = 16
+    horizontal_padding = 18
+    text_icon_padding = 14
+    frame_width = 2
+    frame_color = "{{BORDER}}"
+    separator_color = frame
+    sort = yes
+    idle_threshold = 120
+    font = EB Garamond 13
+    line_height = 0
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    show_age_threshold = 60
+    sticky_history = yes
+    history_length = 40
+    browser = xdg-open
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    corner_radius = 14
+    ignore_dbusclose = false
+    force_xwayland = false
+    force_xinerama = false
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+[experimental]
+    per_monitor_dpi = no
+
+[shortcuts]
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    history = ctrl+grave
+    context = ctrl+shift+period
+
+[urgency_low]
+    background = "{{SURFACE}}"
+    foreground = "{{TEXT_DIM}}"
+    timeout = 5
+
+[urgency_normal]
+    background = "{{SURFACE}}"
+    foreground = "{{TEXT}}"
+    frame_color = "{{ACCENT2}}"
+    timeout = 8
+
+[urgency_critical]
+    background = "{{SURFACE_HIGH}}"
+    foreground = "{{TEXT}}"
+    frame_color = "{{URGENT}}"
+    timeout = 0
