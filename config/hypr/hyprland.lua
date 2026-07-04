@@ -64,13 +64,13 @@ hl.config({
             contrast = 1.0, popups = true, popups_ignorealpha = 0.6,
         },
     },
-    dwindle = { preserve_split = true, smart_resize = true },
+    dwindle = { preserve_split = true, smart_resizing = true },
     master  = { new_status = "slave", mfact = 0.55 },
     misc = {
         disable_hyprland_logo = true, disable_splash_rendering = true,
-        force_default_wallpaper = 0, vfr = true, vrr = 1,
+        force_default_wallpaper = 0, vrr = 1,
         focus_on_activate = true, initial_workspace_tracking = false,
-        new_window_takes_over_fullscreen = 2, animate_manual_resizes = false,
+        animate_manual_resizes = false,
     },
     input = {
         kb_layout = "us", repeat_rate = 40, repeat_delay = 300,
@@ -133,7 +133,7 @@ hl.window_rule({ name = "kitty-transparent", match = { class = "^kitty$" }, opac
 hl.window_rule({ name = "zen-transparent",   match = { class = "^zen-browser$" }, opacity = 0.96 })
 hl.window_rule({ name = "pavu-float",        match = { class = "^pavucontrol$" }, float = true })
 hl.window_rule({ name = "pip",               match = { title = "^Picture-in-Picture$" }, float = true, pin = true })
-hl.window_rule({ name = "no-shadow-tiled",   match = { floating = false }, shadow = false })
+hl.window_rule({ name = "no-shadow-tiled",   match = { float = false }, no_shadow = true })
 
 -- Layer blur (the "stained glass" effect).
 for _, ns in ipairs({ "waybar", "rofi", "dunst", "launcher", "gtk-layer-shell" }) do
