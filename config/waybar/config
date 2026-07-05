@@ -15,6 +15,7 @@
         "clock"
     ],
     "modules-right": [
+        "mpris",
         "cpu",
         "memory",
         "pulseaudio",
@@ -89,6 +90,19 @@
     "memory": {
         "format": "<span font='Material Symbols Sharp 12'></span> {}%",
         "interval": 5
+    },
+
+    "mpris": {
+        "format": "<span font='Material Symbols Sharp 12'>{player_icon}</span> {title} — {artist}",
+        "format-paused": "<span font='Material Symbols Sharp 12'></span> {title} — {artist}",
+        "player-icons": { "default": "", "firefox": "", "zen": "", "spotify": "" },
+        "status-icons": { "paused": "" },
+        "ignored-players": [],
+        "title-len": 24,
+        "artist-len": 18,
+        "on-click": "playerctl play-pause",
+        "on-click-middle": "playerctl next",
+        "on-click-right": "playerctl previous"
     },
 
     "pulseaudio": {

@@ -1,80 +1,86 @@
 // ============================================================================
 //  theme.rasi — Hogwarts app launcher (GENERATED — see palettes.conf)
-// ----------------------------------------------------------------------------
-//  Decorated, parchment-and-glass launcher.  Cinzel for the headings, EB
-//  Garamond for list items, Material Symbols for the prompt icon.
+//  Strategy: load rofi's base theme, then override its CORE colour variables
+//  (background, foreground, selected-*, alternate-*) so the whole launcher
+//  follows the active house palette.  Cinzel headings, EB Garamond items.
 // ============================================================================
 
-@import "shared.rasi"
+@theme "base.rasi"
 
 * {
-    font: "EB Garamond 13";
-    accent:           {{ACCENT}};
-    accent2:          {{ACCENT2}};
-    bg:               {{BG@0.86}};
-    surface:          {{SURFACE@0.92}};
-    surface-alt:      {{SURFACE_ALT@0.96}};
-    fg:               {{TEXT}};
-    fg-dim:           {{TEXT_DIM}};
-    border:           {{BORDER}};
-    urgent:           {{URGENT}};
+    // --- core rofi colour variables (opaque; transparency via window) ---
+    background:                    {{BG@1.0}};
+    foreground:                    {{TEXT@1.0}};
+    lightbg:                       {{SURFACE_ALT@1.0}};
+    lightfg:                       {{TEXT_DIM@1.0}};
+
+    selected-normal-foreground:    {{ACCENT_FG@1.0}};
+    selected-normal-background:    {{ACCENT@1.0}};
+    selected-active-foreground:    {{BG@1.0}};
+    selected-active-background:    {{ACCENT2@1.0}};
+    selected-urgent-foreground:    #ffffff;
+    selected-urgent-background:    {{URGENT@1.0}};
+
+    alternate-normal-foreground:   {{TEXT@1.0}};
+    alternate-normal-background:   {{SURFACE@1.0}};
+    alternate-active-foreground:   {{ACCENT2@1.0}};
+    alternate-active-background:   {{SURFACE_ALT@1.0}};
+    alternate-urgent-foreground:   #ffffff;
+    alternate-urgent-background:   {{SURFACE_HIGH@1.0}};
+
+    red:     {{URGENT@1.0}};
+    blue:    {{ACCENT@1.0}};
+    green:   {{SUCCESS@1.0}};
+    yellow:  {{WARNING@1.0}};
+    border-color:                  {{BORDER@1.0}};
+    separator-color:               {{BORDER_DIM@1.0}};
 }
 
 #window {
-    width:        620px;
-    height:       520px;
-    anchor:       north;
-    location:     north;
-    y-offset:     56px;
-    border-radius:18px;
-    border:       2px solid;
-    border-color: @border;
-    background-color: @bg;
-    padding:      0px;
+    width:            640px;
+    height:           520px;
+    anchor:           north;
+    location:         north;
+    y-offset:         56px;
+    border-radius:    18px;
+    border:           2px solid;
+    border-color:     @border-color;
+    background-color: @background;
+    padding:          0px;
+    spacing:          0px;
 }
 
 #mainbox {
     spacing: 0px;
-    children: [ "inputbar", "message", "listview" ];
+    children: [ "inputbar", "listview" ];
 }
 
-// --- Header / prompt ---------------------------------------------------------
 #inputbar {
-    enabled: true;
-    padding: 22px 26px 16px 26px;
-    spacing: 14px;
-    children: [ "entry" ];
+    padding:          24px 28px 16px 28px;
+    spacing:          14px;
+    children:         [ "entry" ];
     background-color: transparent;
-    border: 0px 0px 1px 0px;
-    border-color: @border;
+    border:           0px 0px 1px 0px;
+    border-color:     @separator-color;
 }
-
-prompt { enabled: false; }
 
 #entry {
-    placeholder:      "Summon an application…";
-    placeholder-color:@fg-dim;
-    text-color:       @fg;
-    font:             "Cinzel 22";
-    vertical-align:   0.5;
-    horizontal-align: 0.0;
+    placeholder:          "Summon an application…";
+    placeholder-color:    @lightfg;
+    text-color:           @foreground;
+    font:                 "Cinzel 22";
+    vertical-align:       0.5;
 }
 
-// --- listview ----------------------------------------------------------------
 #listview {
-    cycles:       true;
-    dynamic:      true;
-    scrollbar:    false;
-    layout:       vertical;
-    padding:      8px 14px 16px 14px;
-    columns:      1;
-    lines:        7;
-    spacing:      2px;
+    cycles:          true;
+    dynamic:         true;
+    scrollbar:       false;
+    columns:         1;
+    lines:           7;
+    spacing:         2px;
+    padding:         8px 14px 16px 14px;
     background-color: transparent;
-}
-
-#message {
-    enabled: false;
 }
 
 #element {
@@ -84,25 +90,18 @@ prompt { enabled: false; }
     padding:          10px 16px;
     border-radius:    12px;
     background-color: transparent;
-    text-color:       @fg;
+    text-color:       @foreground;
 }
-#element-icon {
-    size: 1.6em;
-}
-#element-text {
-    vertical-align: 0.5;
-}
+#element-icon     { size: 1.6em; }
+#element-text     { vertical-align: 0.5; }
 
 #element.selected {
-    background-color:  @surface-alt;
-    border:            1px solid;
-    border-color:      @accent;
-    text-color:        @accent2;
+    background-color: @lightbg;
+    border:           1px solid;
+    border-color:     @blue;
+    text-color:       @foreground;
 }
-#element.alternate.active { background-color: @surface; }
-
-// error / urgent rows
 #element.urgent {
-    background-color: @urgent;
+    background-color: @red;
     text-color:       #ffffff;
 }

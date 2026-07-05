@@ -77,6 +77,20 @@ def hypr_set(opt, val):
     run(f"hyprctl keyword {opt} {val}")
 
 
+def hypr_str(opt):
+    """Read a Hyprland string option (e.g. screen_shader)."""
+    out = sh(f"hyprctl getoption -j {opt} 2>/dev/null")
+    if not out:
+        return ""
+    try:
+        import json
+        d = json.loads(out)
+        v = d.get("str", "")
+        return v if isinstance(v, str) else ""
+    except Exception:
+        return ""
+
+
 def read_state(name, default=""):
     try:
         with open(os.path.join(STATE, name)) as f:
@@ -301,9 +315,9 @@ class Panel(Gtk.Window):
              lambda v: run(f"rfkill {'unblock' if v else 'block'} bluetooth")),
             ("\ue1ac", "Night light", lambda: sh("pidof gammastep") != "",
              self.toggle_nightlight),
-            ("\ue1f5", "Invert colors", lambda: "EMPTY" in str(hypr("decoration:screen_shader") or "EMPTY"),
+            ("\ue1f5", "Invert colors", lambda: hypr_str("decoration:screen_shader").replace("[", "").replace("]", "").strip().upper() not in ("", "EMPTY"),
              self.toggle_invert),
-            ("\uefef", "Keep awake", lambda: sh("pidof wayland-idle-inhibitor.py") != "" or sh("systemd-inhibit --what=idle true") != "",
+            ("\uefef", "Keep awake", lambda: sh(f"{HW}/scripts/idle-inhibit.sh status") == "on",
              self.toggle_idle),
         ]
 
@@ -342,8 +356,7 @@ class Panel(Gtk.Window):
             run("hyprctl keyword decoration:screen_shader '[[EMPTY]]'")
 
     def toggle_idle(self, on):
-        run("pkill -f wayland-idle-inhibitor" if not on
-            else "systemd-inhibit --what=idle sleep 999999 &")
+        run(f"{HW}/scripts/idle-inhibit.sh {'on' if on else 'off'}")
 
     def open_power(self):
         run(os.path.join(CONFIG, "rofi", "scripts", "power.sh"))

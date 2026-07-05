@@ -1,80 +1,78 @@
 // ============================================================================
 //  menu.rasi — Hogwarts menu theme (GENERATED — see palettes.conf)
-//  Used by: settings menu, power menu, keybind cheatsheet, emoji/clipboard.
+//  Used by: settings menu, power menu, keybind cheatsheet, emoji/clipboard,
+//  wallpaper picker, recorder.  Compact list style.
 // ============================================================================
 
-@import "shared.rasi"
+@theme "base.rasi"
 
 * {
-    font: "EB Garamond 14";
-    accent:      {{ACCENT}};
-    accent2:     {{ACCENT2}};
-    bg:          {{BG@0.92}};
-    surface:     {{SURFACE_ALT@0.96}};
-    fg:          {{TEXT}};
-    fg-dim:      {{TEXT_DIM}};
-    border:      {{BORDER}};
-    urgent:      {{URGENT}};
+    background:                    {{BG@1.0}};
+    foreground:                    {{TEXT@1.0}};
+    lightbg:                       {{SURFACE_ALT@1.0}};
+    lightfg:                       {{TEXT_DIM@1.0}};
+
+    selected-normal-foreground:    {{BG@1.0}};
+    selected-normal-background:    {{ACCENT@1.0}};
+    selected-active-foreground:    {{BG@1.0}};
+    selected-active-background:    {{ACCENT2@1.0}};
+    selected-urgent-foreground:    #ffffff;
+    selected-urgent-background:    {{URGENT@1.0}};
+
+    alternate-normal-foreground:   {{TEXT@1.0}};
+    alternate-normal-background:   {{SURFACE@1.0}};
+    alternate-active-foreground:   {{ACCENT2@1.0}};
+    alternate-active-background:   {{SURFACE_ALT@1.0}};
+    alternate-urgent-foreground:   #ffffff;
+    alternate-urgent-background:   {{SURFACE_HIGH@1.0}};
+
+    red:     {{URGENT@1.0}};
+    blue:    {{ACCENT@1.0}};
+    green:   {{SUCCESS@1.0}};
+    yellow:  {{WARNING@1.0}};
+    border-color:                  {{BORDER@1.0}};
+    separator-color:               {{BORDER_DIM@1.0}};
 }
 
 #window {
-    width:        420px;
-    height:       540px;
-    anchor:       center;
-    location:     center;
-    border-radius:16px;
-    border:       2px solid;
-    border-color: @border;
-    background-color: @bg;
-    padding:      18px 14px;
+    width:            440px;
+    height:           560px;
+    anchor:           center;
+    location:         center;
+    border-radius:    16px;
+    border:           2px solid;
+    border-color:     @border-color;
+    background-color: @background;
+    padding:          18px 14px;
 }
 
 #mainbox { spacing: 6px; children: [ "inputbar", "listview" ]; }
 
 #inputbar {
-    enabled: true;
-    padding: 6px 14px 14px 14px;
-    spacing: 10px;
-    children: [ "prompt", "entry" ];
-    border: 0px 0px 1px 0px;
-    border-color: @border;
+    padding:          6px 14px 14px 14px;
+    spacing:          10px;
+    children:         [ "prompt", "entry" ];
+    border:           0px 0px 1px 0px;
+    border-color:     @separator-color;
     background-color: transparent;
 }
-prompt {
-    text-color: @accent2;
-    font:       "Cinzel 16";
-    padding:    0px 4px 0px 0px;
-}
-#entry {
-    placeholder: "Search…";
-    placeholder-color: @fg-dim;
-    text-color: @fg;
-    font: "EB Garamond 15";
-}
+#prompt     { text-color: @green; font: "Cinzel 16"; padding: 0px 4px 0px 0px; }
+#entry      { placeholder: "Search…"; placeholder-color: @lightfg;
+              text-color: @foreground; font: "EB Garamond 15"; }
 
 #listview {
-    cycles:    true;
-    dynamic:   true;
-    scrollbar: false;
-    columns:   1;
-    lines:     10;
-    spacing:   2px;
-    padding:   8px 6px 2px 6px;
+    cycles: true; dynamic: true; scrollbar: false;
+    columns: 1; lines: 10; spacing: 2px; padding: 8px 6px 2px 6px;
     background-color: transparent;
 }
 
 #element {
-    padding: 9px 14px;
-    border-radius: 10px;
-    spacing: 12px;
-    background-color: transparent;
-    text-color: @fg;
+    padding: 9px 14px; border-radius: 10px; spacing: 12px;
+    background-color: transparent; text-color: @foreground;
     orientation: horizontal;
 }
 #element.selected {
-    background-color: @surface;
-    border: 1px solid;
-    border-color: @accent;
-    text-color: @accent2;
+    background-color: @lightbg; border: 1px solid; border-color: @blue;
+    text-color: @yellow;
 }
-element-icon { size: 1.4em; background-color: transparent; }
+#element-icon { size: 1.4em; background-color: transparent; }

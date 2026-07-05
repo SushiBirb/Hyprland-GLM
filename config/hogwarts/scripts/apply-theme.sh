@@ -36,6 +36,12 @@ render() {
 }
 render
 
+# rofi 2.x theming needs rofi's own default theme as a base (the built-in
+# default wins otherwise).  Dump it once so the generated .rasi can @theme it.
+if [ ! -f "$CONFIG_DIR/rofi/base.rasi" ]; then
+  rofi -dump-theme > "$CONFIG_DIR/rofi/base.rasi" 2>/dev/null || true
+fi
+
 # --- 2. Distribute rendered files into real config locations -----------------
 deploy() { # src_rel  dest_abs
   local src="$CACHE_DIR/$1" dst="$2"
@@ -50,6 +56,7 @@ deploy rofi/menu.rasi           "$CONFIG_DIR/rofi/menu.rasi"
 deploy dunst/dunstrc            "$CONFIG_DIR/dunst/dunstrc"
 deploy hypr/colors.conf         "$CONFIG_DIR/hypr/colors.conf"
 deploy hypr/colors.lua          "$CONFIG_DIR/hypr/colors.lua"
+deploy hyprlock/hyprlock.conf   "$CONFIG_DIR/hypr/hyprlock.conf.unfilled"
 deploy zen/userChrome.css       "$CONFIG_DIR/zen/chrome/userChrome.css"
 
 # Animation preset is chosen by MODE (snappy vs whimsy), not by colour palette.
@@ -68,6 +75,21 @@ wallpaper_value() { awk -F= -v t="$THEME" '
 WALL_NAME="$(wallpaper_value)"
 WALL_PATH="$WALL_DIR/${WALL_NAME:-gryffindor.png}"
 [ -f "$WALL_PATH" ] || WALL_PATH="$WALL_DIR/gryffindor.png"
+
+# hyprlock needs runtime values render.py can't know (wallpaper path + house
+# title). Fill them in with a second sed pass over the rendered file.
+HOUSE_NAME="${THEME%-*}"
+HOUSE_TITLE="$(printf '%s' "${HOUSE_NAME:0:1}" | tr '[:lower:]' '[:upper:]')${HOUSE_NAME:1}"
+sed -e "s|{{WALL_PATH}}|$WALL_PATH|g" \
+    -e "s|{{HOUSE_TITLE}}|$HOUSE_TITLE|g" \
+    "$CONFIG_DIR/hypr/hyprlock.conf.unfilled" > "$CONFIG_DIR/hypr/hyprlock.conf"
+rm -f "$CONFIG_DIR/hypr/hyprlock.conf.unfilled"
+
+# Tell GTK/Qt the preferred colour scheme so apps follow the active variant.
+case "$THEME" in
+  *-light) gsettings set org.gnome.desktop.interface color-scheme prefer-light 2>/dev/null || true ;;
+  *)       gsettings set org.gnome.desktop.interface color-scheme prefer-dark 2>/dev/null || true ;;
+esac
 
 # --- 4. Reload each running component ----------------------------------------
 

@@ -96,6 +96,15 @@ window#waybar.empty #window { background: transparent; }
 
 #cpu { color: {{ACCENT}}; }
 #memory { color: {{ACCENT2}}; }
+#mpris {
+    color: {{TEXT}};
+    font-style: italic;
+    background: {{SURFACE@0.45}};
+    border-radius: 10px;
+    padding: 0 12px;
+    margin: 4px 3px;
+}
+#mpris.paused { color: {{TEXT_MUTE}}; }
 #pulseaudio { color: {{TEXT}}; }
 #pulseaudio.muted { color: {{TEXT_MUTE}}; }
 #network { color: {{SUCCESS}}; }
