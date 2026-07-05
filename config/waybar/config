@@ -128,7 +128,7 @@
         "exec": "~/.config/hogwarts/scripts/bar-theme.sh",
         "interval": 10,
         "format": "<span font='Cinzel 12'>{}</span>",
-        "on-click": "~/.config/rofi/scripts/settings.sh",
+        "on-click": "~/.config/hogwarts/scripts/settings-panel.py",
         "tooltip": true
     }
 }

@@ -27,7 +27,7 @@ local terminal    = "kitty"
 local fileManager = "dolphin"
 local launcher    = CONFIG .. "/rofi/scripts/launcher.sh"
 local keybinds    = CONFIG .. "/rofi/scripts/keybinds.sh"
-local settings    = CONFIG .. "/rofi/scripts/settings.sh"
+local settings    = CONFIG .. "/hogwarts/scripts/settings-panel.py"
 local power       = CONFIG .. "/rofi/scripts/power.sh"
 
 -- --- Monitor ----------------------------------------------------------------
@@ -136,7 +136,7 @@ hl.window_rule({ name = "pip",               match = { title = "^Picture-in-Pict
 hl.window_rule({ name = "no-shadow-tiled",   match = { float = false }, no_shadow = true })
 
 -- Layer blur (the "stained glass" effect).
-for _, ns in ipairs({ "waybar", "rofi", "dunst", "launcher", "gtk-layer-shell" }) do
+for _, ns in ipairs({ "waybar", "rofi", "dunst", "launcher", "hogwarts-settings", "gtk-layer-shell" }) do
     hl.layer_rule({ name = "blur-" .. ns, match = { namespace = "^" .. ns .. "$" }, blur = true, ignore_alpha = 0.5 })
 end
 

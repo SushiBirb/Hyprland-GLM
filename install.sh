@@ -55,6 +55,8 @@ PKGS_OFFICIAL=(
   ttf-jetbrains-mono-nerd ttf-material-symbols-variable polkit-gnome
   xdg-user-dirs xdg-utils brightnessctl playerctl pavucontrol
   fontconfig
+  # GTK3 settings panel (illogical-impulse-style sidebar)
+  gtk3 python-gobject gtk-layer-shell networkmanager
   # wallpaper daemon: prefer swww; fall back to the maintained awww fork.
 )
 PKGS_AUR=( swww )

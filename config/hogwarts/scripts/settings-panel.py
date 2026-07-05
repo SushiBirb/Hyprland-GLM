@@ -190,20 +190,25 @@ def build_css(colors):
 
 
 # -------------------------------------------------------------- widget bits ----
-class Panel(Gtk.ApplicationWindow):
-    def __init__(self, app):
-        super().__init__(application=app, title="Hogwarts Settings")
+class Panel(Gtk.Window):
+    def __init__(self):
+        super().__init__(title="Hogwarts Settings")
         self.set_default_size(WIDTH, -1)
         self.get_style_context().add_class("panel")
         self.set_name("panel")
+        self.connect("destroy", self.on_destroy)
 
         GtkLayerShell.init_for_window(self)
         GtkLayerShell.set_namespace(self, "hogwarts-settings")
         for edge in (GtkLayerShell.Edge.TOP, GtkLayerShell.Edge.BOTTOM, GtkLayerShell.Edge.RIGHT):
             GtkLayerShell.set_anchor(self, edge, True)
         GtkLayerShell.set_layer(self, GtkLayerShell.Layer.OVERLAY)
-        GtkLayerShell.set_keyboard_mode(self, GtkLayerShell.KeyboardMode.ON_DEMAND)
-        # Close on Escape / click outside handled via key-press + a left spacer below.
+        # ON_DEMAND lets Escape/close keys work; it is safe because the panel
+        # releases the keyboard the moment it is closed.
+        try:
+            GtkLayerShell.set_keyboard_mode(self, GtkLayerShell.KeyboardMode.ON_DEMAND)
+        except Exception:
+            pass
         self.connect("key-press-event", self.on_key)
 
         self.theme = read_state("theme", "gryffindor-dark")
@@ -211,27 +216,32 @@ class Panel(Gtk.ApplicationWindow):
         self.build()
         self.apply_css()
 
+    def on_destroy(self, *_):
+        try:
+            os.path.exists(PIDFILE) and os.remove(PIDFILE)
+        except Exception:
+            pass
+        Gtk.main_quit()
+
     # -- layout -----------------------------------------------------------
     def build(self):
-        outer = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        # click-to-close spacer to the left of the panel
-        spacer = Gtk.EventBox()
-        spacer.set_size_request(2000, -1)
-        spacer.connect("button-press-event", lambda *_: self.close())
-        outer.pack_start(spacer, True, True, 0)
-
+        # The panel is just its content; the layer is anchored to the right
+        # edge.  Closing is done via Escape (ON_DEMAND keyboard) or by toggling
+        # the keybind (a second launch SIGTERMs the running instance).
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14)
         box.get_style_context().add_class("panel")
         box.set_margin_top(14)
         box.set_margin_bottom(14)
         box.set_size_request(WIDTH, -1)
+        box.set_margin_start(8)
+        box.set_margin_end(8)
 
         box.pack_start(self.header(), False, False, 0)
         box.pack_start(self.quick_toggles(), False, False, 0)
         box.pack_start(self.tabs(), True, True, 0)
         box.pack_start(self.calendar_widget(), False, False, 0)
-        outer.pack_start(box, False, False, 0)
-        self.add(outer)
+        self.add(box)
+        self.add(box)
 
     def header(self):
         h = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
@@ -692,18 +702,15 @@ def main():
             pass
         return
 
-    app = Gtk.Application.new("ai.hogwarts.settings", Gio.ApplicationFlags.FLAGS_NONE)
-
-    def activate(a):
-        win = Panel(a)
-        win.show_all()
-        with open(PIDFILE, "w") as f:
-            f.write(str(os.getpid()))
-        win.connect("destroy", lambda *_: (os.path.exists(PIDFILE) and os.remove(PIDFILE), a.quit()))
-
-    app.connect("activate", activate)
-    signal.signal(signal.SIGTERM, lambda *_: (os.path.exists(PIDFILE) and os.remove(PIDFILE), sys.exit(0)))
-    app.run(None)
+    signal.signal(signal.SIGTERM, lambda *_: (os.path.exists(PIDFILE) and os.remove(PIDFILE), Gtk.main_quit(), sys.exit(0)))
+    win = Panel()
+    with open(PIDFILE, "w") as f:
+        f.write(str(os.getpid()))
+    win.show_all()
+    # Self-terminate in test mode so the panel can never wedge the session.
+    if os.environ.get("HOGWARTS_PANEL_TEST"):
+        GLib.timeout_add_seconds(3, lambda: (os.remove(PIDFILE) if os.path.exists(PIDFILE) else None, Gtk.main_quit()))
+    Gtk.main()
 
 
 if __name__ == "__main__":

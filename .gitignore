@@ -18,3 +18,5 @@ hogwarts-backups/
 
 # Node (from the vendored MCP tool, if copied)
 node_modules/
+__pycache__/
+*.pyc
