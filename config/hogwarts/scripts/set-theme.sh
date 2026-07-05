@@ -32,6 +32,11 @@ case "${1:-}" in
     notify-send -u low -t 1600 "Hogwarts" "Animation preset: $new" 2>/dev/null || true
     apply
     ;;
+  --set-mode)
+    [ -z "${2:-}" ] && { echo "usage: set-theme.sh --set-mode <snappy|whimsy>" >&2; exit 2; }
+    echo "$2" > "$STATE_DIR/mode"
+    apply
+    ;;
   --mode-get)
     cat "$STATE_DIR/mode" 2>/dev/null || echo snappy
     ;;
